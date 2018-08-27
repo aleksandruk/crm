@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">Звіт по диспозиції {{$disposition->nr_rach}}</h3>
+    <h3 class="page-title">Інформування клієнта {{$disposition->client}}</h3>
     <div class="panel panel-default">
         <div class="panel-heading">
             @lang('global.app_list')
@@ -10,7 +10,7 @@
 
 
         <div>
-            <form class="form-horizontal" role="form" method="post" action="{{action('Admin\DispositionsController@driverReportUpdate', 'id='.$disposition->id)}}">
+            <form class="form-horizontal" role="form" method="post" action="{{action('Admin\DispositionsController@infoUpdate', 'id='.$disposition->id)}}">
                 <div class="form-group">
                     {{csrf_field()}}
                     <input name="_method" type="hidden" value="PATCH">
@@ -43,38 +43,18 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="comment">Коментар:</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" id="comment" name="comment" cols="40" rows="1" disabled>{{ $disposition->comment }}</textarea>
+                        <textarea class="form-control" id="comment" name="comment" cols="40" rows="1" disabled>{{$disposition->comment}}</textarea>
                         <p class="errorComment text-center alert alert-danger hidden"></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="rout">Маршрут автобуса:</label>
+                    <label class="control-label col-sm-2" for="report">Повідомлення для клієнта:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="bus_rout" name="bus_rout" value="@if ($disposition->report) {{ $disposition->report['bus_rout'] }} @endif">
-                        <p class="errorSeats text-center alert alert-danger hidden"></p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="number">Державний номер:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="state_number" name="state_number" value="@if ($disposition->report) {{ $disposition->report['state_number'] }} @endif">
-                        <p class="errorSeats text-center alert alert-danger hidden"></p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="arrival">Час прибуття в місце призначення:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="arrival_time" name="arrival_time" value="@if ($disposition->report) {{ $disposition->report['arrival_time'] }} @endif">
-                        <p class="errorSeats text-center alert alert-danger hidden"></p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="note">Примітка:</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control" id="note" name="note" cols="40" rows="2">@if ($disposition->report) {{ $disposition->report['note'] }} @endif</textarea>
+                        <textarea class="form-control" id="report" name="report" cols="40" rows="5">Місць: {{$disposition->seats_amount}}, Автобус: {{ $disposition->report['bus_rout'] }}, держ.№: {{ $disposition->report['state_number'] }}, прибуває в {{ $disposition->report['arrival_time'] }} год.</textarea>
                         <p class="errorReport text-center alert alert-danger hidden"></p>
                     </div>
                 </div>
+
                 <div class="form-group">
                   <div class="col-md-2"></div>
                   <button type="submit" class="btn btn-primary">Зберегти</button>

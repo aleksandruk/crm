@@ -118,6 +118,15 @@
                             </span>
                         </a>
                     </li>
+                    <li style="color: #ccc">Для менеджерів</li>
+                    <li class="{{ Request::is('admin/dispositions/shipped_parcels') ? 'active active-sub' : '' }}">
+                        <a href="{{ route('admin.dispositions.shipped_parcels') }}">
+                            <i class="fa fa-user"></i>
+                            <span class="title">
+                                Відправлений товар
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             @endcan

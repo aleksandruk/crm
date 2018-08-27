@@ -44,6 +44,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
     Route::get('dispositions/all_parcels', ['uses' => 'Admin\DispositionsController@allParcels', 'as' => 'dispositions.all_parcels']);
     Route::get('dispositions/my_parcels', ['uses' => 'Admin\DispositionsController@myParcels', 'as' => 'dispositions.my_parcels']);
+
+    Route::get('dispositions/shipped_parcels', ['uses' => 'Admin\DispositionsController@shippedParcels', 'as' => 'dispositions.shipped_parcels']);
+    Route::get('dispositions/{id}/info',['uses' => 'Admin\DispositionsController@info', 'as' => 'dispositions.info']);
+    Route::patch('dispositions/info_update', 'Admin\DispositionsController@infoUpdate')->name('dispositions.info_update');
     Route::resource('dispositions','Admin\DispositionsController');
 
 

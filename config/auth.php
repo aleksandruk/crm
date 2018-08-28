@@ -45,6 +45,15 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+        'store' => [
+            'driver' => 'session',
+            'provider' => 'storekeepers',
+        ],
+
+        'store-api' => [
+            'driver' => 'token',
+            'provider' => 'storekeepers',
+        ],
     ],
 
     /*
@@ -68,6 +77,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'storekeepers' => [
+            'driver' => 'eloquent',
+            'model' => App\Storekeeper::class,
         ],
 
         // 'users' => [

@@ -132,7 +132,7 @@
             @endcan
 
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="{{ route('auth.change_password') }}">
+                <a href="#">
                     <i class="fa fa-key"></i>
                     <span class="title">@lang('global.app_change_password')</span>
                 </a>
@@ -147,6 +147,6 @@
         </ul>
     </section>
 </aside>
-{!! Form::open(['route' => 'auth.logout', 'style' => 'display:none;', 'id' => 'logout']) !!}
+{!! Form::open(['route' => 'store.logout', 'style' => 'display:none;', 'id' => 'logout']) !!}
 <button type="submit">@lang('global.logout')</button>
 {!! Form::close() !!}

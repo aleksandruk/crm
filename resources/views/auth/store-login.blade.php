@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Логування для адміністраторів</div>
+                <div class="panel-heading">Логування для працівників складу</div>
                 <div class="panel-body">
                     
                     @if (count($errors) > 0)
@@ -22,19 +22,19 @@
                     <form class="form-horizontal"
                           role="form"
                           method="POST"
-                          action="{{ url('login') }}">
+                          action="{{ route('store.login.submit') }}">
                         <input type="hidden"
                                name="_token"
                                value="{{ csrf_token() }}">
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Email</label>
+                            <label class="col-md-4 control-label">PIN</label>
 
                             <div class="col-md-6">
-                                <input type="email"
+                                <input type="text"
                                        class="form-control"
-                                       name="email"
-                                       value="{{ old('email') }}">
+                                       name="pin"
+                                       value="{{ old('pin') }}">
                             </div>
                         </div>
 

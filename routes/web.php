@@ -1,22 +1,38 @@
 <?php
-Route::get('/', function () { return redirect('/admin/home'); });
+// Route::get('/', function () { return redirect('/admin/home'); });
+Route::get('/', function () {
+    return view('welcome');
+});
+// // Authentication Routes...
+// $this->get('login', 'Auth\LoginController@showLoginForm')->name('auth.login');
+// $this->post('login', 'Auth\LoginController@login')->name('auth.login');
+// $this->post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 
-// Authentication Routes...
-$this->get('login', 'Auth\LoginController@showLoginForm')->name('auth.login');
-$this->post('login', 'Auth\LoginController@login')->name('auth.login');
-$this->post('logout', 'Auth\LoginController@logout')->name('auth.logout');
+// // Change Password Routes...
+// $this->get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password');
+// $this->patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password');
 
-// Change Password Routes...
-$this->get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password');
-$this->patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password');
-
-// Password Reset Routes...
+// // Password Reset Routes...
 $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('auth.password.reset');
-$this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('auth.password.reset');
-$this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-$this->post('password/reset', 'Auth\ResetPasswordController@reset')->name('auth.password.reset');
+// $this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('auth.password.reset');
+// $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+// $this->post('password/reset', 'Auth\ResetPasswordController@reset')->name('auth.password.reset');
 
-Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+Route::get('/admin/logout', 'Auth\LoginController@adminLogout')->name('admin.logout');
+
+
+Route::prefix('store')->group(function() {
+    Route::get('/', 'StoreController@index')->name('store.dashboard');
+    Route::get('/login', 'Auth\StoreLoginController@showLoginForm')->name('store.login.submit');
+    Route::post('/login', 'Auth\StoreLoginController@login')->name('store.login');
+    Route::get('/logout', 'Auth\StoreLoginController@logout')->name('store.logout');
+});
+
+Route::prefix('admin')->group(function() {
     Route::get('/home', 'HomeController@index');
     Route::resource('abilities', 'Admin\AbilitiesController');
     Route::post('abilities_mass_destroy', ['uses' => 'Admin\AbilitiesController@massDestroy', 'as' => 'abilities.mass_destroy']);
@@ -24,14 +40,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('roles_mass_destroy', ['uses' => 'Admin\RolesController@massDestroy', 'as' => 'roles.mass_destroy']);
     Route::resource('users', 'Admin\UsersController');
     Route::post('users_mass_destroy', ['uses' => 'Admin\UsersController@massDestroy', 'as' => 'users.mass_destroy']);
-
- //    Route::get('/express_delivery', 'Admin\ExpressDeliveryController@show');
-
- //    Route::get('message/index', 'Admin\MessageController@index');
-	// Route::get('message/send', 'Admin\MessageController@send');
-
-    // Route::get('comments', 'Admin\CommentsController@index');
-    // Route::get('comments/update', 'Admin\CommentsController@update');
 
     Route::get('dispositions/all_packs', ['uses' => 'Admin\DispositionsController@allPacks', 'as' => 'dispositions.all_packs']);
     Route::get('dispositions/my_packs', ['uses' => 'Admin\DispositionsController@myPacks', 'as' => 'dispositions.my_packs']);

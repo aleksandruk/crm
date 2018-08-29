@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use App\Storekeeper;
 
 class StoreLoginController extends Controller
 {
@@ -19,21 +20,30 @@ class StoreLoginController extends Controller
     	return view('auth.store-login');
     }
 
-    public function login(Request $request) 
-    {
-    	$this->validate($request, [
-    		'pin' => 'required'
-    	]);
+    // public function login(Request $request) 
+    // {
+    // 	$this->validate($request, [
+    // 		'email' => 'required|email',
+    //         'password' => 'required|min:6'
+    // 	]);
 
-    	if (Auth::guard('store')->attempt(['pin' => $request->pin, 'password' => $request->password], $request->remember)) {
-    		return redirect()->intended(route('store.dashboard'));
-    	}
-    	return redirect()->back()->withInput($request->only('pin', 'remember'));
+    // 	if (Auth::guard('store')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+    // 		return redirect()->intended(route('store.dashboard'));
+    // 	}
+    // 	return redirect()->back()->withInput($request->only('email', 'remember'));
+    // }
+
+    public function login(Request $request)
+    {
+    	$user = Storekeeper::findByPin($request->pin);
+		$userId = $user->id;
+		$loginUser = Auth::guard('store')->loginUsingId($userId, true);
+		return redirect()->intended(route('store.dashboard'));
     }
 
     public function logout()
     {
     	Auth::guard('store')->logout();
-    	return redirect('/');
+    	return redirect('/store/login');
     } 
 }

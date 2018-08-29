@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Store;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
@@ -320,5 +320,5 @@ class DispositionsController extends Controller
         $disposition->archive = true;
         $disposition->save();
         return redirect('admin/dispositions/shipped_parcels')->with('message', 'Клієнта поінформовано');
-    } 
+    }
 }

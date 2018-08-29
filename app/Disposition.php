@@ -12,13 +12,23 @@ class Disposition extends Model
         'report' => 'array',
     ];
 
-    public function user()
+    public function adminUser()
   {
     return $this->belongsTo('App\User', 'stock_id');
   }
 
-  public function driver()
+  public function adminDriver()
   {
     return $this->belongsTo('App\User', 'driver_id');
+  }
+
+  public function storeUser()
+  {
+    return $this->belongsTo('App\Storekeeper', 'stock_id');
+  }
+
+  public function storeDriver()
+  {
+    return $this->belongsTo('App\Storekeeper', 'driver_id');
   }
 }

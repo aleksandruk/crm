@@ -5,8 +5,8 @@
     <section class="sidebar">
         <ul class="sidebar-menu">
 
-            <li class="{{ $request->segment(1) == 'home' ? 'active' : '' }}">
-                <a href="{{ url('/') }}">
+            <li class="{{ $request->segment(2) == 'home' ? 'active' : '' }}">
+                <a href="@if (Auth::guard('store')->check()) {{ url('/store/home') }} @else {{ url('/admin/home') }}@endif">
                     <i class="fa fa-wrench"></i>
                     <span class="title">@lang('global.app_dashboard')</span>
                 </a>
@@ -24,7 +24,7 @@
                 <ul class="treeview-menu">
 
                     <li class="{{ $request->segment(2) == 'abilities' ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.abilities.index') }}">
+                        <a href="{{ route('abilities.index') }}">
                             <i class="fa fa-briefcase"></i>
                             <span class="title">
                                 @lang('global.abilities.title')
@@ -32,7 +32,7 @@
                         </a>
                     </li>
                     <li class="{{ $request->segment(2) == 'roles' ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.roles.index') }}">
+                        <a href="{{ route('roles.index') }}">
                             <i class="fa fa-briefcase"></i>
                             <span class="title">
                                 @lang('global.roles.title')
@@ -40,7 +40,7 @@
                         </a>
                     </li>
                     <li class="{{ $request->segment(2) == 'users' ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.users.index') }}">
+                        <a href="{{ route('users.index') }}">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 @lang('global.users.title')
@@ -61,7 +61,7 @@
                 <ul class="treeview-menu">
 
                     <li class="{{ Request::is('admin/dispositions/packed') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.dispositions.packed') }}">
+                        <a href="{{ route('dispositions.packed') }}">
                             <i class="fa fa-briefcase"></i>
                             <span class="title">
                                 Онлайн екран
@@ -70,7 +70,7 @@
                     </li>
                     <li style="color: #ccc">Для складу</li>
                     <li class="{{ Request::is('admin/dispositions') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.dispositions.index') }}">
+                        <a href="{{ route('dispositions.index') }}">
                             <i class="fa fa-briefcase"></i>
                             <span class="title">
                                 Не опрацьовані пакування
@@ -78,7 +78,7 @@
                         </a>
                     </li>
                     <li class="{{ Request::is('admin/dispositions/all_packs') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.dispositions.all_packs') }}">
+                        <a href="{{ route('dispositions.all_packs') }}">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Всі пакування
@@ -86,7 +86,7 @@
                         </a>
                     </li>
                     <li class="{{ Request::is('admin/dispositions/my_packs') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.dispositions.my_packs') }}">
+                        <a href="{{ route('dispositions.my_packs') }}">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Мої пакування
@@ -95,7 +95,7 @@
                     </li>
                     <li style="color: #ccc">Для водіїв</li>
                     <li class="{{ Request::is('admin/dispositions/get_parcels') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.dispositions.get_parcels') }}">
+                        <a href="{{ route('dispositions.get_parcels') }}">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Отримати товар
@@ -103,7 +103,7 @@
                         </a>
                     </li>
                     <li class="{{ Request::is('admin/dispositions/all_parcels') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.dispositions.all_parcels') }}">
+                        <a href="{{ route('dispositions.all_parcels') }}">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Товар у водіїв
@@ -111,7 +111,7 @@
                         </a>
                     </li>
                     <li class="{{ Request::is('admin/dispositions/my_parcels') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.dispositions.my_parcels') }}">
+                        <a href="{{ route('dispositions.my_parcels') }}">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Мій товар
@@ -120,7 +120,7 @@
                     </li>
                     <li style="color: #ccc">Для менеджерів</li>
                     <li class="{{ Request::is('admin/dispositions/shipped_parcels') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('admin.dispositions.shipped_parcels') }}">
+                        <a href="{{ route('dispositions.shipped_parcels') }}">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Відправлений товар
@@ -139,7 +139,7 @@
             </li>
 
             <li>
-                <a href="#logout" onclick="$('#logout').submit();">
+                <a href="@if (Auth::guard('store')->check()) {{ url('/store/logout') }} @else {{ url('/admin/logout') }}@endif">
                     <i class="fa fa-arrow-left"></i>
                     <span class="title">@lang('global.app_logout')</span>
                 </a>
@@ -147,6 +147,8 @@
         </ul>
     </section>
 </aside>
-{!! Form::open(['route' => 'store.logout', 'style' => 'display:none;', 'id' => 'logout']) !!}
-<button type="submit">@lang('global.logout')</button>
+{!! Form::open(['route' => 'admin.logout', 'style' => 'display:none;', 'id' => 'admin_logout']) !!}
+{!! Form::close() !!}
+
+{!! Form::open(['route' => 'store.logout', 'style' => 'display:none;', 'id' => 'store_logout']) !!}
 {!! Form::close() !!}

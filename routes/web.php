@@ -1,7 +1,7 @@
 <?php
 // Route::get('/', function () { return redirect('/admin/home'); });
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/admin/home');
 });
 // // Authentication Routes...
 // $this->get('login', 'Auth\LoginController@showLoginForm')->name('auth.login');
@@ -13,7 +13,7 @@ Route::get('/', function () {
 // $this->patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password');
 
 // // Password Reset Routes...
-$this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('auth.password.reset');
+// $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('auth.password.reset');
 // $this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('auth.password.reset');
 // $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 // $this->post('password/reset', 'Auth\ResetPasswordController@reset')->name('auth.password.reset');
@@ -21,15 +21,33 @@ $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');
 Route::get('/admin/logout', 'Auth\LoginController@adminLogout')->name('admin.logout');
 
 
 Route::prefix('store')->group(function() {
-    Route::get('/', 'StoreController@index')->name('store.dashboard');
-    Route::get('/login', 'Auth\StoreLoginController@showLoginForm')->name('store.login.submit');
-    Route::post('/login', 'Auth\StoreLoginController@login')->name('store.login');
+    Route::get('/home', 'StoreController@index')->name('store.dashboard');
+    Route::get('/login', 'Auth\StoreLoginController@showLoginForm')->name('store.login');
+    Route::post('/login', 'Auth\StoreLoginController@login')->name('store.login.submit');
     Route::get('/logout', 'Auth\StoreLoginController@logout')->name('store.logout');
+
+    Route::get('/dispositions/packed', 'Store\DispositionsController@packed')->name('store.dispositions.packed');
+    Route::get('/dispositions/all_packs', 'Store\DispositionsController@allPacks')->name('store.dispositions.all_packs');
+    Route::get('/dispositions/my_packs', 'Store\DispositionsController@myPacks')->name('dispositions.my_packs');
+
+    Route::get('/dispositions/get_parcels', 'Store\DispositionsController@getParcels')->name('dispositions.get_parcels');
+    Route::patch('/dispositions/driver_update', 'Store\DispositionsController@driverUpdate')->name('dispositions.driver_update');
+    Route::get('/dispositions/{id}/driver_report', 'Store\DispositionsController@driverReport')->name('dispositions.driverReport');
+    Route::patch('dispositions/driver_report_update', 'Store\DispositionsController@driverReportUpdate')->name('dispositions.driver_report_update'); 
+
+    Route::get('/dispositions/all_parcels', 'Store\DispositionsController@allParcels')->name('dispositions.all_parcels');
+    Route::get('dispositions/my_parcels', 'Store\DispositionsController@myParcels')->name('dispositions.my_parcels');
+
+    Route::get('/dispositions/shipped_parcels', 'Store\DispositionsController@shippedParcels')->name('dispositions.shipped_parcels');
+    Route::get('/dispositions/{id}/info', 'Store\DispositionsController@info')->name('dispositions.info');
+    Route::patch('/dispositions/info_update', 'Store\DispositionsController@infoUpdate')->name('dispositions.info_update');
+    Route::resource('/dispositions','Store\DispositionsController');
+    
 });
 
 Route::prefix('admin')->group(function() {

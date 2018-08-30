@@ -22,12 +22,12 @@ class Disposition extends Model
     return $this->belongsTo('App\User', 'driver_id');
   }
 
-  public function storeUser()
+  public function storekeeper()
   {
     return $this->belongsTo('App\Storekeeper', 'stock_id');
   }
 
-  public function storeDriver()
+  public function driver()
   {
     return $this->belongsTo('App\Storekeeper', 'driver_id');
   }

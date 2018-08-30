@@ -11,6 +11,7 @@ use App\Disposition;
 use View;
 use Carbon\Carbon;
 use App\User;
+use App\Storekeeper;
 use DB;
 use DateTime;
 use App\Events\NewCommentNotification;
@@ -40,7 +41,7 @@ class DispositionsController extends Controller
     {
         $dispositions = Disposition::whereDate('created_at', Carbon::today())->where('status', 0)->orderBy('priority', 'desc')->orderBy('id', 'desc')->get();
 
-        return view('admin.dispositions.index', ['dispositions' => $dispositions]);
+        return view('store.dispositions.index', ['dispositions' => $dispositions]);
     }
 
     /**
@@ -134,7 +135,7 @@ class DispositionsController extends Controller
     public function show($id)
     {
         $disposition = Disposition::findOrFail($id);
-        return view('admin.dispositions.show', ['disposition' => $disposition]);
+        return view('store.dispositions.show', ['disposition' => $disposition]);
     }
 
     /**
@@ -147,7 +148,7 @@ class DispositionsController extends Controller
     {
         $disposition = Disposition::find($id);
         
-        return view('admin.dispositions.edit', ['disposition' => $disposition]);
+        return view('store.dispositions.edit', ['disposition' => $disposition]);
         // $disposition = Disposition::findOrFail($id);
         // $disposition->num_fak = $request->num_fak;
         // $disposition->nr_rach = $request->nr_rach;
@@ -188,7 +189,7 @@ class DispositionsController extends Controller
             $disposition->status = 1;
             $disposition->save();
             event(new NewCommentNotification($disposition));
-            return redirect('admin/dispositions')->with('message', 'Запис успішно оновлений');
+            return redirect('store/dispositions')->with('message', 'Запис успішно оновлений');
         }
     }
 
@@ -206,10 +207,9 @@ class DispositionsController extends Controller
     }
 
     public function allPacks()
-    {   
+    {
         $dispositions = Disposition::whereDate('created_at', Carbon::today())->where('status', 1)->orderBy('priority', 'desc')->orderBy('id', 'desc')->get();
-
-        return view('admin.dispositions.allPacks', ['dispositions' => $dispositions]);
+        return view('store.dispositions.allPacks', ['dispositions' => $dispositions]);
     }
 
     public function myPacks()
@@ -217,21 +217,21 @@ class DispositionsController extends Controller
         $id = \Auth::user()->id;
         $dispositions = Disposition::whereDate('created_at', Carbon::today())->where('status', 1)->where('stock_id', $id)->orderBy('priority', 'desc')->orderBy('id', 'desc')->get();
 
-        return view('admin.dispositions.myPacks', ['dispositions' => $dispositions]);
+        return view('store.dispositions.myPacks', ['dispositions' => $dispositions]);
     }
 
     public function packed()
     {   
         $dispositions = Disposition::whereDate('created_at', Carbon::today())->where('status', 1)->orderBy('priority', 'desc')->orderBy('stock_time', 'desc')->get();
 
-        return view('admin.dispositions.packed', ['dispositions' => $dispositions]);
+        return view('store.dispositions.packed', ['dispositions' => $dispositions]);
     }
 
     public function getParcels()
     {
             $dispositions = Disposition::whereDate('created_at', Carbon::today())->where('status', 1)->orderBy('priority', 'desc')->orderBy('stock_time', 'desc')->get();
 
-            return view('admin.dispositions.getParcels', ['dispositions' => $dispositions]);      
+            return view('store.dispositions.getParcels', ['dispositions' => $dispositions]);      
     }
 
     public function driverUpdate(Request $request)
@@ -245,7 +245,7 @@ class DispositionsController extends Controller
         $disposition->status = 2;
         $disposition->save();
         event(new NewCommentNotification($disposition));
-        return redirect('admin/dispositions/get_parcels')->with('message', 'Товар успішно прийнятий');
+        return redirect('store/dispositions/get_parcels')->with('message', 'Товар успішно прийнятий');
         
     }
 
@@ -253,7 +253,7 @@ class DispositionsController extends Controller
     {   
         $dispositions = Disposition::whereDate('created_at', Carbon::today())->where('status', '>', 1)->orderBy('status', 'asc')->orderBy('id', 'desc')->get();
 
-        return view('admin.dispositions.allParcels', ['dispositions' => $dispositions]);
+        return view('store.dispositions.allParcels', ['dispositions' => $dispositions]);
     }
 
     public function myParcels()
@@ -261,7 +261,7 @@ class DispositionsController extends Controller
         $id = \Auth::user()->id;
         $dispositions = Disposition::whereDate('created_at', Carbon::today())->where('driver_id', $id)->orderBy('priority', 'desc')->orderBy('id', 'desc')->get();
 
-        return view('admin.dispositions.myParcels', ['dispositions' => $dispositions]);
+        return view('store.dispositions.myParcels', ['dispositions' => $dispositions]);
     }
 
     public function driverReport($id)
@@ -269,7 +269,7 @@ class DispositionsController extends Controller
         $disposition = Disposition::find($id);
         //$disposition->report = json_decode($disposition->report, true);
         //dd($disposition);
-        return view('admin.dispositions.driverReport', ['disposition' => $disposition]);
+        return view('store.dispositions.driverReport', ['disposition' => $disposition]);
     }
 
     public function driverReportUpdate(Request $request)
@@ -296,21 +296,21 @@ class DispositionsController extends Controller
             ]
         ]);
         
-        return redirect('admin/dispositions/my_parcels')->with('message', 'Звіт успішно додано');
+        return redirect('store/dispositions/my_parcels')->with('message', 'Звіт успішно додано');
     }
 
     public function shippedParcels()
     {
         $dispositions = Disposition::whereDate('created_at', Carbon::today())->where('status', 3)->orderBy('status', 'asc')->orderBy('id', 'desc')->get();
 
-        return view('admin.dispositions.shippedParcels', ['dispositions' => $dispositions]);
+        return view('store.dispositions.shippedParcels', ['dispositions' => $dispositions]);
     }
 
     public function info($id)
     {
         $disposition = Disposition::find($id);
         
-        return view('admin.dispositions.info', ['disposition' => $disposition]);
+        return view('store.dispositions.info', ['disposition' => $disposition]);
     }
 
     public function infoUpdate(Request $request)
@@ -319,6 +319,6 @@ class DispositionsController extends Controller
         $disposition->info_time = \Carbon\Carbon::now();
         $disposition->archive = true;
         $disposition->save();
-        return redirect('admin/dispositions/shipped_parcels')->with('message', 'Клієнта поінформовано');
+        return redirect('store/dispositions/shipped_parcels')->with('message', 'Клієнта поінформовано');
     }
 }

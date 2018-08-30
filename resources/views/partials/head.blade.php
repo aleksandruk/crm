@@ -44,3 +44,5 @@
 <link rel="stylesheet" href="https://jmkleger.com/front/icheck/square/yellow.css">
 <!-- toastr notifications -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+<link rel="stylesheet" href="{{ asset('css/jquery.numpad.css') }}">

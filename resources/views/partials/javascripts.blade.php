@@ -26,4 +26,6 @@
 
     <!-- icheck checkboxes -->
 <script type="text/javascript" src="https://jmkleger.com/front/icheck/icheck.min.js"></script>
+
+<script type="text/javascript" src="{{ asset('js/jquery.numpad.js') }}"></script>
 @yield('javascript')

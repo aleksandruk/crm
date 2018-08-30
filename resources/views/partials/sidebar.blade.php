@@ -49,7 +49,7 @@
                     </li>
                 </ul>
             </li>
-
+            @endcan
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-car"></i>
@@ -59,7 +59,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-
+                    @can('store_manage')
                     <li class="{{ Request::is('admin/dispositions/packed') ? 'active active-sub' : '' }}">
                         <a href="{{ route('dispositions.packed') }}">
                             <i class="fa fa-briefcase"></i>
@@ -93,6 +93,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('driver_manage')
                     <li style="color: #ccc">Для водіїв</li>
                     <li class="{{ Request::is('admin/dispositions/get_parcels') ? 'active active-sub' : '' }}">
                         <a href="{{ route('dispositions.get_parcels') }}">
@@ -118,6 +120,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('manager_manage')
                     <li style="color: #ccc">Для менеджерів</li>
                     <li class="{{ Request::is('admin/dispositions/shipped_parcels') ? 'active active-sub' : '' }}">
                         <a href="{{ route('dispositions.shipped_parcels') }}">

@@ -57,7 +57,7 @@ class RolesController extends Controller
         $role = Role::create($request->all());
         $role->allow($request->input('abilities'));
 
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('roles.index');
     }
 
 
@@ -98,7 +98,7 @@ class RolesController extends Controller
         }
         $role->allow($request->input('abilities'));
 
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('roles.index');
     }
 
 
@@ -116,7 +116,7 @@ class RolesController extends Controller
         $role = Role::findOrFail($id);
         $role->delete();
 
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('roles.index');
     }
 
     /**

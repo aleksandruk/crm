@@ -53,7 +53,7 @@ class AbilitiesController extends Controller
         }
         Ability::create($request->all());
 
-        return redirect()->route('admin.abilities.index');
+        return redirect()->route('abilities.index');
     }
 
 
@@ -88,7 +88,7 @@ class AbilitiesController extends Controller
         $ability = Ability::findOrFail($id);
         $ability->update($request->all());
 
-        return redirect()->route('admin.abilities.index');
+        return redirect()->route('abilities.index');
     }
 
 
@@ -106,7 +106,7 @@ class AbilitiesController extends Controller
         $ability = Ability::findOrFail($id);
         $ability->delete();
 
-        return redirect()->route('admin.abilities.index');
+        return redirect()->route('abilities.index');
     }
 
     /**

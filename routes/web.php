@@ -43,7 +43,7 @@ Route::prefix('store')->group(function() {
     Route::get('/dispositions/all_parcels', 'Store\DispositionsController@allParcels')->name('dispositions.all_parcels');
     Route::get('dispositions/my_parcels', 'Store\DispositionsController@myParcels')->name('dispositions.my_parcels');
 
-    Route::get('/dispositions/shipped_parcels', 'Store\DispositionsController@shippedParcels')->name('dispositions.shipped_parcels');
+    Route::get('/dispositions/shipped_parcels', 'Store\DispositionsController@shippedParcels')->name('store.dispositions.shipped_parcels');
     Route::get('/dispositions/{id}/info', 'Store\DispositionsController@info')->name('dispositions.info');
     Route::patch('/dispositions/info_update', 'Store\DispositionsController@infoUpdate')->name('dispositions.info_update');
     Route::resource('/dispositions','Store\DispositionsController');

@@ -59,10 +59,8 @@
                 <div class="pull-right">
                     @if (Auth::guard('store')->check())
                   <a href="{{ route('store.logout') }}" class="btn btn-default btn-flat">Вихід</a>
-                    @elseif (Auth::guard('admin')->check())
+                    @else
                   <a href="{{ route('admin.logout') }}" class="btn btn-default btn-flat">Вихід</a>
-                    @elseif (Auth::guest()->check())
-                    <a href="#" class="btn btn-default btn-flat">Вихід</a>
                     @endif
                 </div>
               </li>

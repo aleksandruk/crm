@@ -14,7 +14,8 @@ class AddForeignToDispositions extends Migration
     public function up()
     {
         Schema::table('dispositions', function (Blueprint $table) {
-            $table->foreign('stock_id')->references('id')->on('users');
+            $table->integer('stock_id')->unsigned()->index()->nullable();
+            $table->foreign('stock_id')->references('id')->on('storekeepers');
         });
     }
 

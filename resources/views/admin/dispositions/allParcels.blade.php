@@ -52,7 +52,7 @@
                                 </tr>
                                 @if ($disposition->status == 3)
                                 <tr >
-                                    <td colspan="10" class="hiddenRow warning" style="padding: 0;"><div class="accordian-body collapse" id="info{{$disposition->id}}"> Деталі:<br><strong>{{$disposition->report}}</strong></div> </td>
+                                    <td colspan="10" class="hiddenRow warning" style="padding: 0;"><div class="accordian-body collapse" id="info{{$disposition->id}}"> Деталі:<br>Автобус <strong>{{ $disposition->report['bus_rout'] }}</strong>, держ. № <strong>{{ $disposition->report['state_number'] }}</strong>, прибуває в <strong>{{ $disposition->report['arrival_time'] }}</strong></div> </td>
                                 </tr>
                                 @endif
                         @endforeach

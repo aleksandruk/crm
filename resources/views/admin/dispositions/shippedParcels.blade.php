@@ -45,7 +45,7 @@
                                     <td>{{ $disposition->comment }}</td>
                                     <td>{{ $disposition->seats_amount }}</td>
                                     <td>{{ ($disposition->priority == 1) ? 'Високий' : 'Звичайний' }}</td>
-                                    <td>{{ $disposition->user->name }}</td>
+                                    <td>{{ $disposition->storekeeper->name }}</td>
                                     <td>{{ $disposition->stock_time }}</td>
                                     <td>{{ $disposition->driver->name }}</td>
                                     <td>{{ $disposition->driver_time }}</td>

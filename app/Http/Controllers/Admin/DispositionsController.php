@@ -21,7 +21,7 @@ class DispositionsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:store');
+        $this->middleware('auth:web');
     }
 
     protected $rules =
@@ -51,12 +51,15 @@ class DispositionsController extends Controller
     public function create()
     {
         // добавляємо в БД новий комент з Falcon
+        $dateFrom = date("Y-m-d");
+        $dateFrom = new DateTime($dateFrom);
+        $dateFrom->setTime(00, 00, 00);
 
-        $today = date("Y-m-d");
-        $dt = new DateTime($today);
+        $dateTo = date("Y-m-d");
+        $dateTo = new DateTime($dateTo);
+        $dateTo->setTime(23, 59, 59);
         
-        $data = DB::connection('pgsql')->select("SELECT KOM.NUM_FAK,FAK.NR_RACH,FAK.KOM,KOM.OPIS,KOM.OP1,KOM.OP2,KOM.OP3,KOM.OP4,KOM.OP5,CUSTOM.SKR FROM FAK AS FAK,KOM AS KOM,CUSTOM AS CUSTOM WHERE KOM.NUM_FAK = FAK.NUMER AND KOM.LASTMOD BETWEEN '{$dt->format('Y-m-d')}' AND '{$dt->format('Y-m-t')}' AND FAK.OKEJKA = TRUE AND FAK.KL = CUSTOM.NUMER AND FAK.TYP LIKE '%DD%' AND FAK.MG LIKE '%01%'");
-
+        $data = DB::connection('pgsql')->select("SELECT KOM.NUM_FAK,FAK.NR_RACH,FAK.KOM,KOM.OPIS,KOM.OP1,KOM.OP2,KOM.OP3,KOM.OP4,KOM.OP5,CUSTOM.SKR FROM FAK AS FAK,KOM AS KOM,CUSTOM AS CUSTOM WHERE KOM.NUM_FAK = FAK.NUMER AND KOM.LASTMOD BETWEEN '{$dateFrom->format('Y-m-d H:i:s')}' AND '{$dateTo->format('Y-m-d H:i:s')}' AND FAK.OKEJKA = TRUE AND FAK.KL = CUSTOM.NUMER AND FAK.TYP LIKE '%DD%' AND FAK.MG LIKE '%01%'");
         foreach ($data as $key => $item) {
             if ($item->opis == "     0.00                     ") {
                 unset($data[$key]);
@@ -92,7 +95,7 @@ class DispositionsController extends Controller
                 $disposition->archive = 0;
                 $disposition->save();
 
-                //dd($comment);
+                //dd($disposition);
                 //працює//event(new NewCommentNotification($disposition));
              }
         }

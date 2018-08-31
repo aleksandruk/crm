@@ -39,42 +39,16 @@
                             </ul>
                         </div>
                     @endif
-
-                    <form id ="login" class="form-horizontal"
-                          role="form"
-                          method="POST"
-                          action="{{ route('store.login.submit') }}">
-                        <input type="hidden"
-                               name="_token"
-                               value="{{ csrf_token() }}">
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">PIN</label>
-
-                            <div class="col-md-6">
-                                <input type="password"
-                                       class="form-control"
-                                       name="pin"
-                                       value="{{ old('pin') }}">
-                            </div>
-                        </div>
-
-                        
-
-                        
-
-
-                        
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit"
-                                        class="btn btn-primary"
-                                        style="margin-right: 15px;">
-                                    Login
-                                </button>
-                            </div>
-                        </div>
+                    @if (count($users) > 0)
+                        @foreach ($users as $user)
+                        <button class="btn btn-default btn-lg user" style="border-radius: 12px;" data-id="{{ $user->id }}">{{ $user->name }}</button>
+                        @endforeach
+                    @else
+                            <p>@lang('global.app_no_entries_in_table')</p>
+                    @endif
+                    <form id ="login" class="form-horizontal" role="form" method="POST" action="{{ route('store.login.submit') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" class="form-control" name="pin" id="pin">
                     </form>
                 </div>
             </div>
@@ -84,10 +58,34 @@
 
 @section('javascript') 
 <script type="text/javascript">
-    $('input[name="pin"]').numpad();
-$('.done').click(function() {
-    //$('#login').submit();
-    alert('done');
-});
+    $(function() {
+        $.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
+        $.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
+        $.fn.numpad.defaults.displayTpl = '<input class="form-control" type="password" />';
+        $.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default btn-lg"></button>';
+        $.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn btn-lg" style="width: 100%;"></button>';
+        $.fn.numpad.defaults.hidePlusMinusButton = true;
+        $.fn.numpad.defaults.hideDecimalButton = true;
+        $.fn.numpad.defaults.textDone = 'Увійти';
+        $.fn.numpad.defaults.textDelete = 'Видалити';
+        $.fn.numpad.defaults.textClear = 'Очистити';
+        $.fn.numpad.defaults.textCancel = 'Відмінити';
+        $.fn.numpad.defaults.onKeypadCreate = function(){
+            $(this).find('.done').addClass('btn-primary');
+        };
+        $.fn.numpad.defaults.onKeypadClose = function(){
+            
+            if ($(this).find('.nmpd-display').val()) {
+                $('#login').submit();
+            }
+            
+        };
+        $(document).ready(function(){
+            $('.user').numpad({
+                target: $('#pin')
+            });
+        });
+    });
 </script>
+
 @endsection

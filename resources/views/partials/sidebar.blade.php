@@ -24,7 +24,7 @@
                 <ul class="treeview-menu">
 
                     <li class="{{ $request->segment(2) == 'abilities' ? 'active active-sub' : '' }}">
-                        <a href="{{ route('abilities.index') }}">
+                        <a href="{{ route('admin.abilities.index') }}">
                             <i class="fa fa-briefcase"></i>
                             <span class="title">
                                 @lang('global.abilities.title')
@@ -32,7 +32,7 @@
                         </a>
                     </li>
                     <li class="{{ $request->segment(2) == 'roles' ? 'active active-sub' : '' }}">
-                        <a href="{{ route('roles.index') }}">
+                        <a href="{{ route('admin.roles.index') }}">
                             <i class="fa fa-briefcase"></i>
                             <span class="title">
                                 @lang('global.roles.title')
@@ -40,7 +40,7 @@
                         </a>
                     </li>
                     <li class="{{ $request->segment(2) == 'users' ? 'active active-sub' : '' }}">
-                        <a href="{{ route('users.index') }}">
+                        <a href="{{ route('admin.users.index') }}">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 @lang('global.users.title')
@@ -60,8 +60,8 @@
                 </a>
                 <ul class="treeview-menu">
                     @can('store_manage')
-                    <li class="{{ Request::is('admin/dispositions/packed') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('dispositions.packed') }}">
+                    <li class="{{ $request->segment(3) == 'packed' ? 'active active-sub' : '' }}">
+                        <a href="@if (Auth::guard('store')->check()) {{ route('store.dispositions.packed') }} @else {{ route('admin.dispositions.packed') }}@endif">
                             <i class="fa fa-briefcase"></i>
                             <span class="title">
                                 Онлайн екран
@@ -69,24 +69,24 @@
                         </a>
                     </li>
                     <li style="color: #ccc">Для складу</li>
-                    <li class="{{ Request::is('admin/dispositions') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('dispositions.index') }}">
+                    <li class="">
+                        <a href="@if (Auth::guard('store')->check()) {{ route('store.dispositions.index') }} @else {{ route('admin.dispositions.index') }}@endif">
                             <i class="fa fa-briefcase"></i>
                             <span class="title">
                                 Не опрацьовані пакування
                             </span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('admin/dispositions/all_packs') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('dispositions.all_packs') }}">
+                    <li class="{{ $request->segment(3) == 'all_packs' ? 'active active-sub' : '' }}">
+                        <a href="@if (Auth::guard('store')->check()) {{ route('store.dispositions.all_packs') }} @else {{ route('admin.dispositions.all_packs') }}@endif">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Всі пакування
                             </span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('admin/dispositions/my_packs') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('dispositions.my_packs') }}">
+                    <li class="{{ $request->segment(3) == 'my_packs' ? 'active active-sub' : '' }}">
+                        <a href="@if (Auth::guard('store')->check()) {{ route('store.dispositions.my_packs') }} @else {{ route('admin.dispositions.my_packs') }}@endif">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Мої пакування
@@ -96,24 +96,24 @@
                     @endcan
                     @can('driver_manage')
                     <li style="color: #ccc">Для водіїв</li>
-                    <li class="{{ Request::is('admin/dispositions/get_parcels') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('dispositions.get_parcels') }}">
+                    <li class="{{ $request->segment(3) == 'get_parcels' ? 'active active-sub' : '' }}">
+                        <a href="@if (Auth::guard('store')->check()) {{ route('store.dispositions.get_parcels') }} @else {{ route('admin.dispositions.get_parcels') }}@endif">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Отримати товар
                             </span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('admin/dispositions/all_parcels') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('dispositions.all_parcels') }}">
+                    <li class="{{ $request->segment(3) == 'all_parcels' ? 'active active-sub' : '' }}">
+                        <a href="@if (Auth::guard('store')->check()) {{ route('store.dispositions.all_parcels') }} @else {{ route('admin.dispositions.all_parcels') }}@endif">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Товар у водіїв
                             </span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('admin/dispositions/my_parcels') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('dispositions.my_parcels') }}">
+                    <li class="{{ $request->segment(3) == 'my_parcels' ? 'active active-sub' : '' }}">
+                        <a href="@if (Auth::guard('store')->check()) {{ route('store.dispositions.my_parcels') }} @else {{ route('admin.dispositions.my_parcels') }}@endif">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Мій товар
@@ -123,8 +123,8 @@
                     @endcan
                     @can('manager_manage')
                     <li style="color: #ccc">Для менеджерів</li>
-                    <li class="{{ Request::is('admin/dispositions/shipped_parcels') ? 'active active-sub' : '' }}">
-                        <a href="{{ route('dispositions.shipped_parcels') }}">
+                    <li class="{{ $request->segment(3) == 'shipped_parcels' ? 'active active-sub' : '' }}">
+                        <a href="@if (Auth::guard('store')->check()) {{ route('store.dispositions.shipped_parcels') }} @else {{ route('admin.dispositions.shipped_parcels') }}@endif">
                             <i class="fa fa-user"></i>
                             <span class="title">
                                 Відправлений товар
@@ -134,20 +134,6 @@
                 </ul>
             </li>
             @endcan
-
-            <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="#">
-                    <i class="fa fa-key"></i>
-                    <span class="title">@lang('global.app_change_password')</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="@if (Auth::guard('store')->check()) {{ url('/store/logout') }} @else {{ url('/admin/logout') }}@endif">
-                    <i class="fa fa-arrow-left"></i>
-                    <span class="title">@lang('global.app_logout')</span>
-                </a>
-            </li>
         </ul>
     </section>
 </aside>

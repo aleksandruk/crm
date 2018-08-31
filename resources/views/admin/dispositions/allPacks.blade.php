@@ -34,7 +34,7 @@
                                     <td>{{ $disposition->comment }}</td>
                                     <td>{{ $disposition->seats_amount }}</td>
                                     <td>{{ ($disposition->priority == 1) ? 'Високий' : '' }}</td>
-                                    <td>{{ $disposition->user->name }}</td>
+                                    <td>{{ $disposition->storekeeper->name }}</td>
                                     <td>{{ $disposition->stock_time }}</td>
                                     <td>
                                         <a href="{{action('Admin\DispositionsController@edit', $disposition->id)}}" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span> Змінити</a>

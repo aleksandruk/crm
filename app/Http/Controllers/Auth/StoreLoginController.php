@@ -17,7 +17,8 @@ class StoreLoginController extends Controller
 
     public function showLoginForm() 
     {
-    	return view('auth.store-login');
+        $users = Storekeeper::all();
+    	return view('auth.store-login', compact('users'));
     }
 
     // public function login(Request $request) 

@@ -3,7 +3,7 @@
 @section('content')
     <h3 class="page-title">@lang('global.abilities.title')</h3>
     
-    {!! Form::model($ability, ['method' => 'PUT', 'route' => ['abilities.update', $ability->id]]) !!}
+    {!! Form::model($ability, ['method' => 'PUT', 'route' => ['admin.abilities.update', $ability->id]]) !!}
 
     <div class="panel panel-default">
         <div class="panel-heading">

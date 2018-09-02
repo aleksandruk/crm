@@ -46,3 +46,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
 <link rel="stylesheet" href="{{ asset('css/jquery.numpad.css') }}">
+
+<link rel="stylesheet" href="{{ asset('css/jm.spinner.css') }}">

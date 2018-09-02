@@ -32,6 +32,10 @@ Route::prefix('store')->group(function() {
     Route::resource('/dispositions', 'Store\DispositionsController', [
         'as' => 'store'
     ]);
+
+    Route::get('/novaposhta/new', 'Store\NovaPoshtaController@index')->name('store.novaposhta.index');
+    Route::post('/novaposhta/all_cities', 'Store\NovaPoshtaController@allCities')->name('store.novaposhta.all_cities');
+    Route::get('/novaposhta/autocomplete', 'Store\NovaPoshtaController@autocomplete')->name('store.novaposhta.autocomplete');
     
 });
 

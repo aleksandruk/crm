@@ -14,6 +14,7 @@
         "laravelcollective/html": "^5.3",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "~3.0",
+        "serj1chen/nova-poshta-sdk-php": "^2.0",
         "silber/bouncer": "v1.0.0-beta.2"
     },
     "require-dev": {

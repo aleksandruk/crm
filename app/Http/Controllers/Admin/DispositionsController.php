@@ -190,7 +190,7 @@ class DispositionsController extends Controller
             $disposition->stock_id = Auth::user()->id;
             $disposition->status = 1;
             $disposition->save();
-            event(new NewCommentNotification($disposition));
+            //event(new NewCommentNotification($disposition));
             return redirect('admin/dispositions')->with('message', 'Запис успішно оновлений');
         }
     }
@@ -247,7 +247,7 @@ class DispositionsController extends Controller
         $disposition->driver_id = Auth::user()->id;
         $disposition->status = 2;
         $disposition->save();
-        event(new NewCommentNotification($disposition));
+        //event(new NewCommentNotification($disposition));
         return redirect('admin/dispositions/get_parcels')->with('message', 'Товар успішно прийнятий');
         
     }
